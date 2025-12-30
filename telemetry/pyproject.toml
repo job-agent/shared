@@ -28,7 +28,7 @@ dev = [
 packages = ["src/telemetry"]
 
 [tool.pytest.ini_options]
-testpaths = ["src"]
+testpaths = ["smoke_tests"]
 python_files = ["*_test.py"]
 python_functions = ["test_*"]
 python_classes = ["Test*"]
