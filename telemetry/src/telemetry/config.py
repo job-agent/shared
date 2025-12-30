@@ -52,6 +52,7 @@ class TelemetryConfig:
         Returns:
             TelemetryConfig instance with values from environment.
         """
+
         def parse_bool(value: str, default: bool) -> bool:
             if not value:
                 return default
@@ -73,11 +74,7 @@ class TelemetryConfig:
             except ValueError:
                 return default
 
-        resolved_service_name = (
-            service_name
-            or os.getenv("OTEL_SERVICE_NAME")
-            or cls.service_name
-        )
+        resolved_service_name = service_name or os.getenv("OTEL_SERVICE_NAME") or cls.service_name
 
         return cls(
             service_name=resolved_service_name,

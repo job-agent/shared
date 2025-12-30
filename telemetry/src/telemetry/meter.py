@@ -73,11 +73,13 @@ class MeterManager:
             return
 
         # Create resource with service attributes
-        resource = Resource.create({
-            SERVICE_NAME: self._config.service_name,
-            SERVICE_VERSION: self._config.service_version,
-            "deployment.environment": self._config.deployment_environment,
-        })
+        resource = Resource.create(
+            {
+                SERVICE_NAME: self._config.service_name,
+                SERVICE_VERSION: self._config.service_version,
+                "deployment.environment": self._config.deployment_environment,
+            }
+        )
 
         readers = []
 

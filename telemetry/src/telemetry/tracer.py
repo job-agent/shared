@@ -84,11 +84,13 @@ class TracerManager:
             return
 
         # Create resource with service attributes
-        resource = Resource.create({
-            SERVICE_NAME: self._config.service_name,
-            SERVICE_VERSION: self._config.service_version,
-            "deployment.environment": self._config.deployment_environment,
-        })
+        resource = Resource.create(
+            {
+                SERVICE_NAME: self._config.service_name,
+                SERVICE_VERSION: self._config.service_version,
+                "deployment.environment": self._config.deployment_environment,
+            }
+        )
 
         # Create sampler
         sampler = self._create_sampler()
@@ -123,9 +125,7 @@ class TracerManager:
         """
         sampler_name = self._config.traces_sampler.lower()
         ratio = (
-            self._config.traces_sampler_arg
-            if self._config.traces_sampler_arg is not None
-            else 1.0
+            self._config.traces_sampler_arg if self._config.traces_sampler_arg is not None else 1.0
         )
 
         # Clamp ratio to valid range
@@ -161,6 +161,7 @@ class TracerManager:
         # SQLAlchemy instrumentation
         try:
             from opentelemetry.instrumentation.sqlalchemy import SQLAlchemyInstrumentor
+
             SQLAlchemyInstrumentor().instrument()
             self._logger.debug("SQLAlchemy instrumentation enabled")
         except ImportError:
@@ -171,6 +172,7 @@ class TracerManager:
         # Pika (RabbitMQ) instrumentation
         try:
             from opentelemetry.instrumentation.pika import PikaInstrumentor
+
             PikaInstrumentor().instrument()
             self._logger.debug("Pika instrumentation enabled")
         except ImportError:
@@ -181,6 +183,7 @@ class TracerManager:
         # Requests HTTP client instrumentation
         try:
             from opentelemetry.instrumentation.requests import RequestsInstrumentor
+
             RequestsInstrumentor().instrument()
             self._logger.debug("Requests instrumentation enabled")
         except ImportError:

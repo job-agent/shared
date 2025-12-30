@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "shared"
+version = "0.1.0"
+requires-python = ">=3.9"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=9.0.2",
+    "pytest-mock>=3.14.1",
+    "pytest-cov>=7.0.0",
+    "mypy>=1.19.1",
+    "ruff>=0.14.10",
+    "pre-commit>=4.0.1",
+]
+
+[tool.setuptools]
+packages = []  # No packages at root - workspaces pattern
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.pytest.ini_options]
+testpaths = ["job-scrapper-contracts", "scrapper-messaging", "telemetry", "smoke_tests"]
+markers = ["smoke: marks tests as smoke tests"]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
