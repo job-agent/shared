@@ -17,6 +17,7 @@ PROJECT_ROOT = Path(__file__).parent.parent
 PACKAGES = [
     ("job-scrapper-contracts", "job_scrapper_contracts"),
     ("scrapper-messaging", "scrapper_messaging"),
+    ("telemetry", "telemetry"),
 ]
 
 
