@@ -116,9 +116,7 @@ class TestMypyConfiguration:
             pytest.skip("mypy is not installed. Install with: pip install mypy")
 
         version_output = result.stdout.strip()
-        assert "mypy" in version_output.lower(), (
-            f"Unexpected mypy version output: {version_output}"
-        )
+        assert "mypy" in version_output.lower(), f"Unexpected mypy version output: {version_output}"
 
     @pytest.mark.parametrize(
         "package_dir_name,source_subdir",
