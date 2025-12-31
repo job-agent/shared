@@ -18,6 +18,8 @@ class TelemetryConfig:
         deployment_environment: Deployment environment (dev, staging, prod).
         enabled: Whether telemetry is enabled.
         console_exporter_enabled: Whether to export traces/metrics to console.
+        otlp_exporter_enabled: Whether to export traces via OTLP to a collector.
+        otlp_endpoint: OTLP collector endpoint (gRPC).
         traces_sampler: Sampling strategy (always_on, always_off, traceidratio, parentbased_*).
         traces_sampler_arg: Argument for sampler (e.g., 0.5 for 50% sampling ratio).
         metrics_export_interval_ms: Interval for periodic metric export in milliseconds.
@@ -28,6 +30,8 @@ class TelemetryConfig:
     deployment_environment: str = "development"
     enabled: bool = True
     console_exporter_enabled: bool = True
+    otlp_exporter_enabled: bool = False
+    otlp_endpoint: str = "http://otel-collector:4317"
     traces_sampler: str = "parentbased_always_on"
     traces_sampler_arg: Optional[float] = None
     metrics_export_interval_ms: int = 60000
@@ -86,6 +90,10 @@ class TelemetryConfig:
             console_exporter_enabled=parse_bool(
                 os.getenv("OTEL_EXPORTER_CONSOLE_ENABLED", ""), True
             ),
+            otlp_exporter_enabled=parse_bool(
+                os.getenv("OTEL_EXPORTER_OTLP_ENABLED", ""), False
+            ),
+            otlp_endpoint=os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT", cls.otlp_endpoint),
             traces_sampler=os.getenv("OTEL_TRACES_SAMPLER", cls.traces_sampler),
             traces_sampler_arg=parse_float(os.getenv("OTEL_TRACES_SAMPLER_ARG", "")),
             metrics_export_interval_ms=parse_int(

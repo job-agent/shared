@@ -104,6 +104,10 @@ class TracerManager:
             self._tracer_provider.add_span_processor(BatchSpanProcessor(console_exporter))
             self._logger.info("Console span exporter enabled")
 
+        # Add OTLP exporter if enabled
+        if self._config.otlp_exporter_enabled:
+            self._add_otlp_exporter()
+
         # Set as global tracer provider
         trace.set_tracer_provider(self._tracer_provider)
 
@@ -116,6 +120,31 @@ class TracerManager:
             self._config.service_name,
             self._config.traces_sampler,
         )
+
+    def _add_otlp_exporter(self) -> None:
+        """Add OTLP exporter if the required dependencies are available.
+
+        Gracefully degrades if the OTLP exporter cannot be initialized.
+        """
+        try:
+            from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
+
+            otlp_exporter = OTLPSpanExporter(
+                endpoint=self._config.otlp_endpoint,
+                insecure=True,
+            )
+            self._tracer_provider.add_span_processor(BatchSpanProcessor(otlp_exporter))
+            self._logger.info(
+                "OTLP span exporter enabled, endpoint: %s",
+                self._config.otlp_endpoint,
+            )
+        except ImportError:
+            self._logger.warning(
+                "OTLP exporter requested but opentelemetry-exporter-otlp-proto-grpc "
+                "is not installed. Install with: pip install opentelemetry-exporter-otlp-proto-grpc"
+            )
+        except Exception as e:
+            self._logger.warning("Failed to initialize OTLP exporter: %s", e)
 
     def _create_sampler(self) -> Sampler:
         """Create a sampler based on configuration.
