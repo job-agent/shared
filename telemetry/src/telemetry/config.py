@@ -90,9 +90,7 @@ class TelemetryConfig:
             console_exporter_enabled=parse_bool(
                 os.getenv("OTEL_EXPORTER_CONSOLE_ENABLED", ""), True
             ),
-            otlp_exporter_enabled=parse_bool(
-                os.getenv("OTEL_EXPORTER_OTLP_ENABLED", ""), False
-            ),
+            otlp_exporter_enabled=parse_bool(os.getenv("OTEL_EXPORTER_OTLP_ENABLED", ""), False),
             otlp_endpoint=os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT", cls.otlp_endpoint),
             traces_sampler=os.getenv("OTEL_TRACES_SAMPLER", cls.traces_sampler),
             traces_sampler_arg=parse_float(os.getenv("OTEL_TRACES_SAMPLER_ARG", "")),
