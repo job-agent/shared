@@ -126,6 +126,10 @@ class TracerManager:
 
         Gracefully degrades if the OTLP exporter cannot be initialized.
         """
+        if self._tracer_provider is None:
+            self._logger.warning("Cannot add OTLP exporter: tracer provider not initialized")
+            return
+
         try:
             from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
 
