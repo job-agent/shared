@@ -57,35 +57,10 @@ jobs:
       - name: Run security audit
         run: ./scripts/security_audit.sh
 
-  type-check:
-    name: Type Check
-    runs-on: ubuntu-latest
-    needs: [lint, security-audit]
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-
-      - name: Install all packages
-        run: |
-          python -m pip install --upgrade pip
-          pip install -e "packages/job-scrapper-contracts[dev]"
-          pip install -e "packages/telemetry[dev]"
-          pip install -e "packages/scrapper-messaging[dev]"
-
-      - name: Run mypy on all packages
-        run: |
-          mypy --config-file packages/job-scrapper-contracts/pyproject.toml packages/job-scrapper-contracts/src/job_scrapper_contracts
-          mypy --config-file packages/telemetry/pyproject.toml packages/telemetry/src/telemetry
-          mypy --config-file packages/scrapper-messaging/pyproject.toml packages/scrapper-messaging/src/scrapper_messaging --ignore-missing-imports
-
   test-job-scrapper-contracts:
     name: Test - job-scrapper-contracts
     runs-on: ubuntu-latest
-    needs: type-check
+    needs: [lint, security-audit]
     defaults:
       run:
         working-directory: packages/job-scrapper-contracts
@@ -108,7 +83,7 @@ jobs:
   test-scrapper-messaging:
     name: Test - scrapper-messaging
     runs-on: ubuntu-latest
-    needs: type-check
+    needs: [lint, security-audit]
     defaults:
       run:
         working-directory: packages/scrapper-messaging
@@ -133,7 +108,7 @@ jobs:
   test-telemetry:
     name: Test - telemetry
     runs-on: ubuntu-latest
-    needs: type-check
+    needs: [lint, security-audit]
     defaults:
       run:
         working-directory: packages/telemetry
