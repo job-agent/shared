@@ -25,8 +25,11 @@ line-length = 100
 target-version = "py39"
 
 [tool.pytest.ini_options]
-testpaths = ["packages/job-scrapper-contracts", "packages/scrapper-messaging", "packages/telemetry", "smoke_tests"]
-markers = ["smoke: marks tests as smoke tests"]
+testpaths = ["packages/job-scrapper-contracts", "packages/scrapper-messaging", "packages/telemetry", "smoke_tests", "quality_tests"]
+markers = [
+    "smoke: marks tests as smoke tests",
+    "quality: marks tests as quality tests (type checking, static analysis)",
+]
 
 [tool.mypy]
 python_version = "3.9"
