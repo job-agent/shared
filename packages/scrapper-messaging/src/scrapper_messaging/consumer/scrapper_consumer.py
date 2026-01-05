@@ -192,8 +192,7 @@ class ScrapperConsumer:
             on_jobs_batch=emit_jobs,
         )
 
-        if isinstance(result, list):
-            total_jobs = max(total_jobs, len(result))
+        total_jobs = max(total_jobs, len(result))
 
         self.logger.info("Scraping completed: total %s jobs scraped", total_jobs)
 

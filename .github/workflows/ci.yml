@@ -53,9 +53,9 @@ jobs:
 
       - name: Run mypy on all packages
         run: |
-          mypy packages/job-scrapper-contracts/src/job_scrapper_contracts
-          mypy packages/telemetry/src/telemetry
-          mypy packages/scrapper-messaging/src/scrapper_messaging --ignore-missing-imports
+          mypy --config-file packages/job-scrapper-contracts/pyproject.toml packages/job-scrapper-contracts/src/job_scrapper_contracts
+          mypy --config-file packages/telemetry/pyproject.toml packages/telemetry/src/telemetry
+          mypy --config-file packages/scrapper-messaging/pyproject.toml packages/scrapper-messaging/src/scrapper_messaging --ignore-missing-imports
 
   test-job-scrapper-contracts:
     name: Test - job-scrapper-contracts
