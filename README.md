@@ -16,9 +16,9 @@ Shared packages for job-agent platform microservices. These packages are used by
 Install all shared packages in development mode:
 
 ```bash
-pip install -e job-scrapper-contracts[dev]
-pip install -e scrapper-messaging[dev]
-pip install -e telemetry[dev]
+pip install -e packages/job-scrapper-contracts[dev]
+pip install -e packages/scrapper-messaging[dev]
+pip install -e packages/telemetry[dev]
 ```
 
 ## Running Tests
@@ -34,9 +34,9 @@ pytest
 Run tests for a specific package:
 
 ```bash
-pytest job-scrapper-contracts
-pytest scrapper-messaging
-pytest telemetry
+pytest packages/job-scrapper-contracts
+pytest packages/scrapper-messaging
+pytest packages/telemetry
 ```
 
 ### Smoke Tests
@@ -54,12 +54,13 @@ The `smoke` marker is defined in `pyproject.toml`.
 
 ```
 shared/
-├── job-scrapper-contracts/    # Package with unit tests
-├── scrapper-messaging/        # Package with unit tests
-├── telemetry/                 # Package with unit tests
-└── smoke_tests/               # Centralized smoke tests
-    ├── conftest.py            # Shared fixtures
-    └── test_type_checking.py  # Type checking tests (parametrized)
+├── packages/
+│   ├── job-scrapper-contracts/    # Package with unit tests
+│   ├── scrapper-messaging/        # Package with unit tests
+│   └── telemetry/                 # Package with unit tests
+└── smoke_tests/                   # Centralized smoke tests
+    ├── conftest.py                # Shared fixtures
+    └── test_type_checking.py      # Type checking tests (parametrized)
 ```
 
 ## Code Quality

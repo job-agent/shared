@@ -15,7 +15,7 @@ echo ""
 echo "Installing all packages in editable mode..."
 for package in "${PACKAGES[@]}"; do
     echo "  Installing $package..."
-    pip install -e "$PROJECT_ROOT/$package[dev]"
+    pip install -e "$PROJECT_ROOT/packages/$package[dev]"
 done
 
 echo ""
