@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Callable, List, Optional
+from typing import Callable, List
 
 from job_scrapper_contracts import Job, ScrapeJobsRequest, ScrapperServiceInterface
 from job_scrapper_contracts.scrape_filter import ScrapeJobsFilter
@@ -22,13 +22,14 @@ class ScrapperServiceInvoker(IJobsServiceInvoker):
         request: ScrapeJobsRequest,
         batch_size: int,
         on_jobs_batch: Callable[[List[Job], bool], None],
-    ) -> Optional[List[Job]]:
+    ) -> List[Job]:
         timeout = request.get("timeout", 30)
         filters: ScrapeJobsFilter = request.get("filters", {})
 
-        return self._service.scrape_jobs(
+        result: List[Job] = self._service.scrape_jobs(
             filters=filters,
             timeout=timeout,
             batch_size=batch_size,
             on_jobs_batch=on_jobs_batch,
         )
+        return result
