@@ -5,3 +5,13 @@ repos:
       - id: ruff
         args: [--fix]
       - id: ruff-format
+
+  - repo: local
+    hooks:
+      - id: pip-audit
+        name: pip-audit (security scan)
+        entry: ./scripts/security_audit.sh
+        language: script
+        files: (pyproject\.toml|requirements.*\.txt|\.pip-audit-ignore)$
+        pass_filenames: false
+        stages: [pre-commit]
