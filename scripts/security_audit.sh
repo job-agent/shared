@@ -66,6 +66,7 @@ for package_path in "${PACKAGE_DIRS[@]}"; do
     echo "Scanning: $package_name"
 
     # Run pip-audit with JSON output
+    # Scan installed environment (in CI, only project deps are installed)
     set +e
     RAW_OUTPUT=$(cd "$package_path" && pip-audit --format=json $IGNORE_ARGS 2>&1)
     EXIT_CODE=$?

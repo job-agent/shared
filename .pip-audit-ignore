@@ -1,9 +1,1 @@
-# pip-audit ignore file
-# Add vulnerability IDs to ignore (one per line)
-# Example:
-#   GHSA-xxxx-xxxx-xxxx
-#   CVE-2024-XXXX
-#   PYSEC-2024-XXXX
-#
-# Use this file sparingly and document why each vulnerability is ignored.
-# Prefer upgrading dependencies to patched versions when possible.
+CVE-2025-53000

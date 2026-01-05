@@ -45,10 +45,14 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
-      - name: Install pip-audit
+      - name: Install dependencies and pip-audit
         run: |
           python -m pip install --upgrade pip
           pip install pip-audit
+          # Install all packages to scan their dependencies
+          pip install -e "packages/job-scrapper-contracts"
+          pip install -e "packages/telemetry"
+          pip install -e "packages/scrapper-messaging"
 
       - name: Run security audit
         run: ./scripts/security_audit.sh
